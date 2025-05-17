@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "../components/ui/button";
+import { Card, CardContent } from "../components/ui/card";
 import { Globe, PlayCircle, LogIn } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -29,23 +29,23 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-pink-100 via-yellow-100 to-blue-100 text-gray-800 px-4 py-6">
+    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-pink-100 via-yellow-100 to-blue-100 text-gray-800 px-4 sm:px-6 md:px-8 py-4 sm:py-6">
       {/* Top Bar */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 mb-6">
         <div className="flex items-center gap-2">
           <img
             src="/MathMaster logo.png"
             alt="MathMaster Logo"
-            className="h-10 w-10 object-contain"
+            className="h-8 sm:h-10 w-8 sm:w-10 object-contain"
           />
-          <span className="font-bold text-lg text-pink-600">MathMaster</span>
+          <span className="font-bold text-base sm:text-lg text-pink-600">MathMaster</span>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
           <div className="flex items-center gap-2">
-            <Globe className="w-5 h-5 text-purple-600" />
+            <Globe className="w-4 sm:w-5 h-4 sm:h-5 text-purple-600" />
             <select
-              className="border border-purple-300 rounded px-2 py-1 text-sm bg-white text-purple-700"
+              className="border border-purple-300 rounded px-2 py-1 text-xs sm:text-sm bg-white text-purple-700"
               value={language}
               onChange={(e) => setLanguage(e.target.value)}
             >
@@ -54,24 +54,24 @@ export default function LandingPage() {
               ))}
             </select>
           </div>
-          <Button className="bg-pink-500 text-white hover:bg-pink-600 px-4 py-1 text-sm rounded-full">
-            <LogIn className="w-4 h-4 mr-1" /> Login
+          <Button className="bg-pink-500 text-white hover:bg-pink-600 px-3 sm:px-4 py-1 text-xs sm:text-sm rounded-full">
+            <LogIn className="w-3 sm:w-4 h-3 sm:h-4 mr-1" /> Login
           </Button>
         </div>
       </div>
 
       {/* Hero Section */}
-      <div className="flex flex-col items-center text-center gap-6">
+      <div className="flex flex-col items-center text-center gap-4 sm:gap-6 mt-4 sm:mt-0">
         <motion.img
           src="/math-king-ade.png"
           alt="Math King Ade"
-          className="w-40 h-40 rounded-full border-4 border-yellow-400 shadow-xl"
+          className="w-32 sm:w-40 h-32 sm:h-40 rounded-full border-4 border-yellow-400 shadow-xl"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         />
         <motion.h1
-          className="text-4xl sm:text-5xl font-extrabold text-pink-600 drop-shadow-sm"
+          className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-pink-600 drop-shadow-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
@@ -79,7 +79,7 @@ export default function LandingPage() {
           Welcome to MathMasters
         </motion.h1>
         <motion.p
-          className="max-w-md text-purple-700 text-sm sm:text-base"
+          className="max-w-md text-xs sm:text-sm md:text-base text-purple-700 px-4 sm:px-0"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.6 }}
@@ -87,24 +87,24 @@ export default function LandingPage() {
           Learn math the fun way with cultural examples and support for Nigerian languages. Join Math King Ade on your math adventure!
         </motion.p>
         <motion.div
-          className="flex gap-4"
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.6 }}
         >
-          <Button className="bg-yellow-400 text-white hover:bg-yellow-500 px-6 py-2 rounded-full text-sm shadow-md">
+          <Button className="bg-yellow-400 text-white hover:bg-yellow-500 px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm shadow-md w-full sm:w-auto">
             Get Started
           </Button>
-          <Button variant="outline" className="flex items-center gap-2 px-6 py-2 rounded-full text-sm border-pink-400 text-pink-600">
-            <PlayCircle className="w-4 h-4" /> Preview Game
+          <Button variant="outline" className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm border-pink-400 text-pink-600 w-full sm:w-auto">
+            <PlayCircle className="w-3 sm:w-4 h-3 sm:h-4" /> Preview Game
           </Button>
         </motion.div>
       </div>
 
       {/* Why Kids Love Section */}
-      <section className="mt-20 text-center">
-        <h2 className="text-2xl font-bold text-purple-700 mb-4">Why Kids Love MathMasters 💖</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+      <section className="mt-12 sm:mt-20 text-center px-2 sm:px-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-purple-700 mb-4">Why Kids Love MathMasters 💖</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
           <Card className="bg-white border-2 border-pink-300 p-4">
             <CardContent>
               <p className="text-lg font-semibold text-pink-600">🎮 It’s like a game!</p>
@@ -127,9 +127,9 @@ export default function LandingPage() {
       </section>
 
       {/* Testimonials */}
-      <div className="mt-16">
+      <div className="mt-12 sm:mt-16 px-2 sm:px-4">
         <motion.h2
-          className="text-2xl font-bold text-center text-yellow-600 mb-6"
+          className="text-xl sm:text-2xl font-bold text-center text-yellow-600 mb-4 sm:mb-6"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
@@ -156,9 +156,9 @@ export default function LandingPage() {
       </div>
 
       {/* Meet the Creators */}
-      <section className="mt-20 text-center">
-        <h2 className="text-2xl font-bold text-pink-700 mb-6">Meet the Creators 👑</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
+      <section className="mt-12 sm:mt-20 text-center px-2 sm:px-4">
+        <h2 className="text-xl sm:text-2xl font-bold text-pink-700 mb-4 sm:mb-6">Meet the Creators 👑</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8 max-w-4xl mx-auto">
           <motion.div
             whileHover={{ scale: 1.05 }}
             className="bg-white p-6 rounded-xl border-2 border-pink-200 shadow-md"
@@ -177,9 +177,9 @@ export default function LandingPage() {
       </section>
 
       {/* Game Preview */}
-      <div className="mt-20 text-center">
+      <div className="mt-12 sm:mt-20 text-center px-2 sm:px-4">
         <motion.h2
-          className="text-2xl font-bold text-pink-600 mb-4"
+          className="text-xl sm:text-2xl font-bold text-pink-600 mb-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
@@ -187,7 +187,7 @@ export default function LandingPage() {
           Sneak Peek
         </motion.h2>
         <motion.div
-          className="rounded-lg overflow-hidden shadow-2xl max-w-md mx-auto border-4 border-yellow-300"
+          className="rounded-lg overflow-hidden shadow-2xl max-w-sm sm:max-w-md mx-auto border-4 border-yellow-300"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
@@ -197,7 +197,7 @@ export default function LandingPage() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-20 text-center text-sm text-gray-600 border-t border-purple-200 pt-4">
+      <footer className="mt-12 sm:mt-20 text-center text-xs sm:text-sm text-gray-600 border-t border-purple-200 pt-4">
         Powered by <span className="font-bold text-purple-700">Sensay</span> | <a href="mailto:team@sensay.app" className="text-pink-600 font-medium">team@sensay.app</a>
         <p className="mt-2">Follow us on <a href="https://twitter.com/sensayHQ" target="_blank" rel="noopener noreferrer" className="text-blue-500 font-semibold">Twitter</a> for updates!</p>
       </footer>
