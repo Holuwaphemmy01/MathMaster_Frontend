@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Button } from "../components/ui/button";
 import { Card, CardContent } from "../components/ui/card";
-import { Globe, PlayCircle, LogIn } from "lucide-react";
+import { PlayCircle, LogIn } from "lucide-react";
 import { motion } from "framer-motion";
+import king from "../assets/math-king-ade.png";
+import { LoginModal } from "../components/ui/LoginModal";
+import { SignupModal } from "../components/ui/SignupModal";  // Add this import
 
-const languages = ["English", "Yoruba", "Hausa", "Igbo"];
 const testimonials = [
   {
     quote:
@@ -18,8 +20,19 @@ const testimonials = [
 ];
 
 export default function LandingPage() {
-  const [language, setLanguage] = useState("English");
-  const [testimonialIndex, setTestimonialIndex] = useState(0);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [isSignupOpen, setIsSignupOpen] = useState(false);
+  const [testimonialIndex, setTestimonialIndex] = useState(0);  // Add this state
+
+  const handleSwitchToSignup = () => {
+    setIsLoginOpen(false);
+    setIsSignupOpen(true);
+  };
+
+  const handleSwitchToLogin = () => {
+    setIsSignupOpen(false);
+    setIsLoginOpen(true);
+  };
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,40 +43,26 @@ export default function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-pink-100 via-yellow-100 to-blue-100 text-gray-800 px-4 sm:px-6 md:px-8 py-4 sm:py-6">
-      {/* Top Bar */}
+
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 mb-6">
         <div className="flex items-center gap-2">
-          <img
-            src="/MathMaster logo.png"
-            alt="MathMaster Logo"
-            className="h-8 sm:h-10 w-8 sm:w-10 object-contain"
-          />
-          <span className="font-bold text-base sm:text-lg text-pink-600">MathMaster</span>
+          
+        <span className="font-bold text-base sm:text-lg text-pink-600 font-pacifico">MathMaster</span>
         </div>
 
         <div className="flex items-center gap-3 sm:gap-4">
-          <div className="flex items-center gap-2">
-            <Globe className="w-4 sm:w-5 h-4 sm:h-5 text-purple-600" />
-            <select
-              className="border border-purple-300 rounded px-2 py-1 text-xs sm:text-sm bg-white text-purple-700"
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-            >
-              {languages.map((lang) => (
-                <option key={lang}>{lang}</option>
-              ))}
-            </select>
-          </div>
-          <Button className="bg-pink-500 text-white hover:bg-pink-600 px-3 sm:px-4 py-1 text-xs sm:text-sm rounded-full">
+          <Button 
+            className="bg-pink-500 text-white hover:bg-pink-600 px-3 sm:px-4 py-1 text-xs sm:text-sm rounded-full"
+            onClick={() => setIsLoginOpen(true)}
+          >
             <LogIn className="w-3 sm:w-4 h-3 sm:h-4 mr-1" /> Login
           </Button>
         </div>
       </div>
 
-      {/* Hero Section */}
       <div className="flex flex-col items-center text-center gap-4 sm:gap-6 mt-4 sm:mt-0">
         <motion.img
-          src="/math-king-ade.png"
+          src={king}
           alt="Math King Ade"
           className="w-32 sm:w-40 h-32 sm:h-40 rounded-full border-4 border-yellow-400 shadow-xl"
           initial={{ opacity: 0, y: -20 }}
@@ -92,7 +91,10 @@ export default function LandingPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.6 }}
         >
-          <Button className="bg-yellow-400 text-white hover:bg-yellow-500 px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm shadow-md w-full sm:w-auto">
+          <Button 
+            className="bg-yellow-400 text-white hover:bg-yellow-500 px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm shadow-md w-full sm:w-auto"
+            onClick={() => setIsSignupOpen(true)}  // Add onClick handler
+          >
             Get Started
           </Button>
           <Button variant="outline" className="flex items-center justify-center gap-2 px-4 sm:px-6 py-2 rounded-full text-xs sm:text-sm border-pink-400 text-pink-600 w-full sm:w-auto">
@@ -101,7 +103,6 @@ export default function LandingPage() {
         </motion.div>
       </div>
 
-      {/* Why Kids Love Section */}
       <section className="mt-12 sm:mt-20 text-center px-2 sm:px-4">
         <h2 className="text-xl sm:text-2xl font-bold text-purple-700 mb-4">Why Kids Love MathMasters 💖</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
@@ -201,6 +202,18 @@ export default function LandingPage() {
         Powered by <span className="font-bold text-purple-700">Sensay</span> | <a href="mailto:team@sensay.app" className="text-pink-600 font-medium">team@sensay.app</a>
         <p className="mt-2">Follow us on <a href="https://twitter.com/sensayHQ" target="_blank" rel="noopener noreferrer" className="text-blue-500 font-semibold">Twitter</a> for updates!</p>
       </footer>
+
+      <LoginModal 
+        isOpen={isLoginOpen} 
+        onClose={() => setIsLoginOpen(false)}
+        onSwitchToSignup={handleSwitchToSignup}
+      />
+
+      <SignupModal 
+        isOpen={isSignupOpen} 
+        onClose={() => setIsSignupOpen(false)}
+        onSwitchToLogin={handleSwitchToLogin}
+      />
     </div>
   );
 }
