@@ -73,6 +73,12 @@ export default function Dashboard() {
     navigate('/challenge');
   };
 
+  const handleLogout = () => {
+    // Add any logout logic here (e.g., clearing tokens, state, etc.)
+    
+    navigate('/');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-100 to-purple-100 text-gray-800 flex flex-col">
       {/* Header */}
@@ -90,7 +96,10 @@ export default function Dashboard() {
           </h1>
           <div className="flex gap-4">
             <Settings className="w-6 h-6 hover:text-yellow-300 cursor-pointer" />
-            <Power className="w-6 h-6 text-red-300 hover:text-red-500 cursor-pointer" />
+            <Power 
+              className="w-6 h-6 text-red-300 hover:text-red-500 cursor-pointer" 
+              onClick={handleLogout}
+            />
           </div>
         </div>
       </motion.header>

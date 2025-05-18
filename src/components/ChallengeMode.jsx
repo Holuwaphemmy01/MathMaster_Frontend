@@ -7,11 +7,12 @@ import { useNavigate } from "react-router-dom";
 export default function ChallengeMode() {
   const navigate = useNavigate();
   const [questionNumber, setQuestionNumber] = useState(1);
-  const [timer, setTimer] = useState(600);
+  const [timer, setTimer] = useState(600); // 10 minutes in seconds
   const [question, setQuestion] = useState("What is 1/2 + 1/4?");
+  const [answer, setAnswer] = useState("");
 
-  const handlePowerClick = () => {
-    navigate('/dashboard');
+  const handleLogout = () => {
+    navigate('/');
   };
 
   return (
@@ -23,12 +24,16 @@ export default function ChallengeMode() {
         className="bg-gradient-to-r from-purple-300 to-purple-500 text-white px-6 py-4 shadow-md rounded-b-3xl"
       >
         <div className="flex justify-between items-center">
-          <h1 className="text-xl font-bold">MathMaster</h1>
+          <h1 className="text-2xl font-normal" style={{ fontFamily: 'Pacifico' }}>
+            <span className="bg-gradient-to-r from-emerald-400 via-blue-500 to-indigo-600 text-transparent bg-clip-text hover:from-blue-500 hover:via-indigo-500 hover:to-purple-600 transition-all duration-300">
+              MathMasters
+            </span>
+          </h1>
           <div className="flex gap-4">
             <Settings className="w-6 h-6 hover:text-yellow-300 cursor-pointer" />
             <Power 
               className="w-6 h-6 text-red-300 hover:text-red-500 cursor-pointer" 
-              onClick={handlePowerClick}
+              onClick={handleLogout}
             />
           </div>
         </div>
