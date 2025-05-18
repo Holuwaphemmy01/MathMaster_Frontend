@@ -3,6 +3,7 @@ import { Settings, Power, Clock, Users, ChevronDown } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import mathQueen from '../assets/math-queen.png';
 
 export default function Dashboard() {
   const navigate = useNavigate();
@@ -82,7 +83,11 @@ export default function Dashboard() {
         className="bg-gradient-to-r from-purple-300 to-purple-500 text-white px-6 py-4 shadow-md rounded-b-3xl"
       >
         <div className="flex justify-between items-center">
-          <h1 className="text-xl font-bold">MathMasters</h1>
+          <h1 className="text-2xl font-normal" style={{ fontFamily: 'Pacifico' }}>
+            <span className="bg-gradient-to-r from-emerald-400 via-blue-500 to-indigo-600 text-transparent bg-clip-text hover:from-blue-500 hover:via-indigo-500 hover:to-purple-600 transition-all duration-300">
+              MathMasters
+            </span>
+          </h1>
           <div className="flex gap-4">
             <Settings className="w-6 h-6 hover:text-yellow-300 cursor-pointer" />
             <Power className="w-6 h-6 text-red-300 hover:text-red-500 cursor-pointer" />
@@ -91,21 +96,22 @@ export default function Dashboard() {
       </motion.header>
 
       <main className="flex-1 px-4 py-6 space-y-6">
-        {/* User Info Section */}
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.5 }}
-          className="bg-yellow-200 rounded-3xl p-4 flex items-center gap-4 shadow-xl"
+          className="bg-gradient-to-br from-purple-300 via-pink-200 to-purple-200 rounded-3xl p-8 flex items-center gap-8 shadow-2xl"
         >
           <img
-            src="/math-king.png"
-            alt="Math King Ade"
-            className="w-20 h-20 object-contain rounded-full border-4 border-white"
+            src={mathQueen}
+            alt="Math Queen"
+            className="w-32 h-32 object-cover rounded-full border-8 border-white shadow-xl transform hover:scale-105 transition-transform duration-300"
           />
-          <div>
-            <p className="text-lg font-semibold text-purple-800">{level}</p>
-            <p className="text-sm text-gray-600">Current Topic: {topic}</p>
+          <div className="space-y-3">
+            <h2 className="text-2xl font-bold text-purple-900">Welcome Sarah!</h2>
+            <p className="text-base text-purple-800">
+              I am <span className="font-bold">Queen Oluwasemilore</span>. Challenge the king to prove your skills!
+            </p>
           </div>
         </motion.div>
 
