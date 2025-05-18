@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Settings, Power, Clock, Users } from "lucide-react";
+import { Settings, Power, Clock, Users, ChevronDown } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { motion } from "framer-motion";
 
@@ -7,10 +7,25 @@ export default function Dashboard() {
   const [user, setUser] = useState("Fadeke");
   const [level, setLevel] = useState("Level 3");
   const [topic, setTopic] = useState("fractions");
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [showProgress, setShowProgress] = useState(false); // Move this here
+
+  const leaderboardData = [
+    { name: "Amina", problemsSolved: 128 },
+    { name: "Chinedu", problemsSolved: 115 },
+    { name: "Femi", problemsSolved: 102 },
+    { name: "Seun", problemsSolved: 98 },
+    { name: "Bola", problemsSolved: 85 },
+    { name: "Tunde", problemsSolved: 79 },
+    { name: "Yemi", problemsSolved: 72 },
+    { name: "Kemi", problemsSolved: 65 },
+    { name: "Wale", problemsSolved: 58 },
+    { name: "Zainab", problemsSolved: 50 }
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-100 to-purple-100 text-gray-800 flex flex-col">
-      {/* Header */}
+ 
       <motion.header
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -27,7 +42,6 @@ export default function Dashboard() {
       </motion.header>
 
       <main className="flex-1 px-4 py-6 space-y-6">
-        {/* Avatar and Level Info */}
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -45,14 +59,57 @@ export default function Dashboard() {
           </div>
         </motion.div>
 
-        {/* Actions */}
-        <div className="grid grid-cols-2 gap-4">
-          <Button className="bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold py-1 rounded-xl shadow-md text-xs">
+        
+        <div className="grid grid-cols-6 gap-4 relative">
+          <Button 
+            className="bg-yellow-400 hover:bg-yellow-500 text-purple-900 font-bold py-1 rounded-xl shadow-md text-xs flex items-center justify-center gap-1"
+            onClick={() => setShowLeaderboard(!showLeaderboard)}
+          >
             LEADERBOARD
+            <ChevronDown className="w-4 h-4" />
           </Button>
-          <Button className="bg-pink-300 hover:bg-pink-400 text-purple-900 font-bold py-1 rounded-xl shadow-md text-xs">
-            PROGRESS
-          </Button>
+          
+          {showLeaderboard && (
+            <div className="absolute top-full mt-1 w-100 bg-white rounded-xl shadow-lg z-10">
+              <div className="p-4">
+                {leaderboardData.map((user, index) => (
+                  <div key={user.name} className="flex justify-between items-center py-2">
+                    <div className="flex items-center gap-3">
+                      <span className="text-sm font-medium text-gray-700">{index + 1}.</span>
+                      <span className="text-sm font-medium text-gray-700">{user.name}</span>
+                    </div>
+                    <span className="text-sm font-semibold text-purple-600">
+                      {user.problemsSolved} solved
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          
+          <div className="relative">
+            <Button 
+              className="bg-pink-300 hover:bg-pink-400 text-purple-900 font-bold py-1 rounded-xl shadow-md text-xs"
+              onClick={() => setShowProgress(!showProgress)}
+            >
+              PROGRESS
+            </Button>
+            
+            {showProgress && (
+              <div className="absolute top-full mt-1 w-48 bg-white/95 backdrop-blur-sm rounded-lg shadow-lg z-10 border border-pink-100">
+                <div className="p-3 space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-medium text-gray-700">Solved:</span>
+                    <span className="text-xs font-semibold text-green-600">85</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-medium text-gray-700">Failed:</span>
+                    <span className="text-xs font-semibold text-red-600">15</span>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Challenge Section */}
@@ -100,3 +157,4 @@ export default function Dashboard() {
     </div>
   );
 }
+

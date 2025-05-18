@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import king from "../assets/math-king-ade.png";
 import { LoginModal } from "../components/ui/LoginModal";
 import { SignupModal } from "../components/ui/SignupModal";  // Add this import
+import { useNavigate } from 'react-router-dom';
 
 const testimonials = [
   {
@@ -22,7 +23,8 @@ const testimonials = [
 export default function LandingPage() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
-  const [testimonialIndex, setTestimonialIndex] = useState(0);  // Add this state
+  const [testimonialIndex, setTestimonialIndex] = useState(0);  
+  const navigate = useNavigate();
 
   const handleSwitchToSignup = () => {
     setIsLoginOpen(false);
@@ -40,6 +42,11 @@ export default function LandingPage() {
     }, 20000);
     return () => clearInterval(interval);
   }, []);
+
+  const handleLogin = () => {
+    // Add your login logic here
+    navigate('/dashboard');
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-pink-100 via-yellow-100 to-blue-100 text-gray-800 px-4 sm:px-6 md:px-8 py-4 sm:py-6">
