@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function ChallengeMode() {
   const navigate = useNavigate();
   const [questionNumber, setQuestionNumber] = useState(1);
-  const [timer, setTimer] = useState(600); // 10 minutes in seconds
+  const [timer, setTimer] = useState(600);
   const [question, setQuestion] = useState("What is 1/2 + 1/4?");
   const [answer, setAnswer] = useState("");
 

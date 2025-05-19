@@ -44,30 +44,30 @@ export default function LandingPage() {
   }, []);
 
   const handleLogin = () => {
-    // Add your login logic here
-    navigate('/dashboard');
+    setIsLoginOpen(true);  
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-gradient-to-br from-pink-100 via-yellow-100 to-blue-100 text-gray-800 px-4 sm:px-6 md:px-8 py-4 sm:py-6">
+      <header className="bg-gradient-to-br from-pink-100 via-yellow-100 to-blue-100 shadow-sm fixed w-full top-0 left-0 z-50">
+        <nav className="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl sm:text-3xl" style={{ fontFamily: 'Pacifico' }}>
+              <span className="bg-gradient-to-r from-emerald-400 via-blue-500 to-indigo-600 text-transparent bg-clip-text hover:from-blue-500 hover:via-indigo-500 hover:to-purple-600 transition-all duration-300">
+                MathMasters
+              </span>
+            </h1>
+            <Button 
+              onClick={handleLogin}
+              className="bg-purple-100 hover:bg-purple-200 text-purple-700 px-3 sm:px-6 py-2 text-sm sm:text-base"
+            >
+              Login
+            </Button>
+          </div>
+        </nav>
+      </header>
 
-      <div className="flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 mb-6">
-        <div className="flex items-center gap-2">
-          
-        <span className="font-bold text-base sm:text-lg text-pink-600 font-pacifico">MathMaster</span>
-        </div>
-
-        <div className="flex items-center gap-3 sm:gap-4">
-          <Button 
-            className="bg-pink-500 text-white hover:bg-pink-600 px-3 sm:px-4 py-1 text-xs sm:text-sm rounded-full"
-            onClick={() => setIsLoginOpen(true)}
-          >
-            <LogIn className="w-3 sm:w-4 h-3 sm:h-4 mr-1" /> Login
-          </Button>
-        </div>
-      </div>
-
-      <div className="flex flex-col items-center text-center gap-4 sm:gap-6 mt-4 sm:mt-0">
+      <div className="flex flex-col items-center text-center gap-4 sm:gap-6 mt-32 sm:mt-36">
         <motion.img
           src={king}
           alt="Math King Ade"
