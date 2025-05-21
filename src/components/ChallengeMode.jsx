@@ -1,8 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Settings, Power, Clock, Users, Video } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import rightMan from "../assets/right-man.png";
+import '@fontsource/comic-neue';
+
+function useTypewriter(text, speed = 50) {
+  const [displayText, setDisplayText] = useState('');
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (index <= text.length) {
+      const timer = setTimeout(() => {
+        setDisplayText(text.slice(0, index));
+        setIndex(index + 1);
+      }, speed);
+      return () => clearTimeout(timer);
+    } else {
+      setTimeout(() => {
+        setIndex(0);
+      }, 2000);
+    }
+  }, [index, text]);
+
+  return displayText;
+}
 
 export default function ChallengeMode() {
   const navigate = useNavigate();
@@ -10,6 +33,10 @@ export default function ChallengeMode() {
   const [timer, setTimer] = useState(600);
   const [question, setQuestion] = useState("What is 1/2 + 1/4?");
   const [answer, setAnswer] = useState("");
+
+  const welcomeMessage = useTypewriter(
+    "I am Adigun, and I'll be your guide. Kindly attempt the challenges below, and if you need any help, just click on the explain button - I'll be happy to walk you through the solution!"
+  );
 
   const handleLogout = () => {
     navigate('/');
@@ -39,8 +66,31 @@ export default function ChallengeMode() {
         </div>
       </motion.header>
 
-      {/* Main Content */}
       <main className="flex-1 px-4 py-6 space-y-6">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white shadow-xl rounded-3xl p-6 mb-6"
+        >
+          <div className="flex items-start gap-6">
+            <motion.img
+              src={rightMan}
+              alt="Adigun"
+              className="w-32 h-32 rounded-full border-4 border-yellow-400 shadow-xl flex-shrink-0"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5 }}
+            />
+            <div>
+              <h2 className="text-2xl font-bold text-purple-700 mb-2">Welcome to the Challenge!</h2>
+              <p className="text-gray-700 min-h-[80px] font-comic-neue text-lg leading-relaxed" style={{ fontFamily: 'Comic Neue, cursive' }}>
+                {welcomeMessage}
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -48,7 +98,7 @@ export default function ChallengeMode() {
           className="bg-white shadow-xl rounded-3xl p-6 space-y-4"
         >
           <div className="flex justify-between items-center">
-            <p className="font-bold text-purple-700">Question {questionNumber}/10</p>
+            <p className="font-bold text-purple-700">Question</p>
             <p className="font-mono text-red-500">Time Left: {Math.floor(timer / 60)}:{("0" + (timer % 60)).slice(-2)}</p>
           </div>
 
@@ -73,7 +123,7 @@ export default function ChallengeMode() {
         </motion.div>
       </main>
 
-      {/* Footer */}
+     
       <motion.footer
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

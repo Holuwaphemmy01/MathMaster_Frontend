@@ -5,7 +5,7 @@ import { PlayCircle, LogIn } from "lucide-react";
 import { motion } from "framer-motion";
 import king from "../assets/math-king-ade.png";
 import { LoginModal } from "../components/ui/LoginModal";
-import { SignupModal } from "../components/ui/SignupModal";  
+import { SignupModal } from "../components/ui/SignupModal";  // Changed this line
 import { useNavigate } from 'react-router-dom';
 
 const testimonials = [
@@ -134,7 +134,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Testimonials */}
+
       <div className="mt-12 sm:mt-16 px-2 sm:px-4">
         <motion.h2
           className="text-xl sm:text-2xl font-bold text-center text-yellow-600 mb-4 sm:mb-6"

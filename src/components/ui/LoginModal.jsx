@@ -1,52 +1,118 @@
-import { Button } from "./button";
+import { useState } from 'react';
+import { X } from 'lucide-react';
+import { Button } from './button';
+import axios from 'axios';
 
 export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  });
+
+  const [error, setError] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('https://math-master-backend-mb6a.onrender.com/login', formData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: false
+      });
+      
+      console.log('Login successful:', response.data);
+      onClose();
+    } catch (error) {
+      console.error('Login failed:', error.response?.data || error.message);
+      setError(error.response?.data?.message || 'Invalid credentials');
+      setShowErrorModal(true);
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm bg-white/30 flex items-center justify-center p-4 z-50 transition-all duration-300">
-      <div className="bg-white/95 rounded-2xl p-6 w-full max-w-md shadow-xl border border-pink-100">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-pink-600">Welcome Back!</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            ✕
-          </button>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl w-full max-w-md relative">
+        <button
+          onClick={onClose}
+          className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
+        >
+          <X size={24} />
+        </button>
+        <div className="p-6">
+          <h2 className="text-2xl font-bold text-purple-700 mb-6">Login</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Username</label>
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                required
+              />
+            </div>
+
+            {error && <p className="text-red-500 text-sm">{error}</p>}
+
+            <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg">
+              Login
+            </Button>
+          </form>
+
+          <p className="text-center mt-4 text-sm text-gray-600">
+            Don't have an account?{' '}
+            <button onClick={onSwitchToSignup} className="text-purple-600 hover:text-purple-700">
+              Sign up here
+            </button>
+          </p>
         </div>
-        
-        <form className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
-              placeholder="Enter your email"
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pink-500"
-              placeholder="Enter your password"
-            />
-          </div>
-          
-          <Button className="w-full bg-pink-500 text-white hover:bg-pink-600">
-            Login
-          </Button>
-        </form>
-        
-        <p className="text-center mt-4 text-sm text-gray-600">
-          Don't have an account?{" "}
-          <button 
-            onClick={onSwitchToSignup}
-            className="text-pink-600 hover:text-pink-700 font-medium"
-          >
-            Sign up
-          </button>
-        </p>
       </div>
+
+      {/* Single Error Modal */}
+      {showErrorModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
+          <div className="bg-white rounded-lg p-6 w-full max-w-sm relative">
+            <button
+              onClick={() => setShowErrorModal(false)}
+              className="absolute right-4 top-4 text-red-500 hover:text-red-700"
+            >
+              <X size={24} />
+            </button>
+            <div className="flex items-center justify-center mb-4">
+              <X className="text-red-500" size={48} />
+            </div>
+            <h3 className="text-xl font-semibold text-center mb-2">Invalid Credentials</h3>
+            <p className="text-gray-600 text-center">{error}</p>
+            <Button
+              onClick={() => setShowErrorModal(false)}
+              className="w-full mt-4 bg-red-500 hover:bg-red-600 text-white"
+            >
+              Try Again
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
