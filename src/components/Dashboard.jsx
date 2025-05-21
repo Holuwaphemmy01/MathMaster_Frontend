@@ -5,9 +5,10 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import mathQueen from '../assets/math-queen.png';
 
-export default function Dashboard() {
+// Change from default export to named export
+export function Dashboard() {
   const navigate = useNavigate();
-  const [user, setUser] = useState("Fadeke");
+  const [username, setUsername] = useState('');
   const [level, setLevel] = useState("Level 3");
   const [topic, setTopic] = useState("fractions");
   const [showLeaderboard, setShowLeaderboard] = useState(false);
@@ -79,6 +80,13 @@ export default function Dashboard() {
     navigate('/');
   };
 
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-100 via-pink-100 to-purple-100 text-gray-800 flex flex-col">
       {/* Header */}
@@ -117,7 +125,7 @@ export default function Dashboard() {
             className="w-32 h-32 object-cover rounded-full border-8 border-white shadow-xl transform hover:scale-105 transition-transform duration-300"
           />
           <div className="space-y-3">
-            <h2 className="text-2xl font-bold text-purple-900">Welcome Sarah!</h2>
+            <h2 className="text-2xl font-bold text-purple-900">Welcome {username || 'Student'}!</h2>
             <p className="text-base text-purple-800">
               I am <span className="font-bold">Queen Oluwasemilore</span>. Challenge the king to prove your skills!
             </p>

@@ -24,11 +24,11 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
         withCredentials: false
       });
       
-      console.log('Login successful:', response.data);
-      // Store user data if needed
-      localStorage.setItem('user', JSON.stringify(response.data));
+      console.log('User data:', response.data);
+      // Update this line to access the correct path
+      localStorage.setItem('username', response.data.data.username);
       onClose();
-      navigate('/dashboard'); // Redirect to dashboard
+      navigate('/dashboard');
     } catch (error) {
       console.error('Login failed:', error.response?.data || error.message);
       setError(error.response?.data?.message || 'Invalid credentials');

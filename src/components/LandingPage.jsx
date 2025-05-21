@@ -20,7 +20,8 @@ const testimonials = [
   },
 ];
 
-export default function LandingPage() {
+// Change from default export to named export
+export function LandingPage() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isSignupOpen, setIsSignupOpen] = useState(false);
   const [testimonialIndex, setTestimonialIndex] = useState(0);  
