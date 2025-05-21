@@ -2,8 +2,10 @@ import { useState } from 'react';
 import { X } from 'lucide-react';
 import { Button } from './button';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -23,7 +25,10 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
       });
       
       console.log('Login successful:', response.data);
+      // Store user data if needed
+      localStorage.setItem('user', JSON.stringify(response.data));
       onClose();
+      navigate('/dashboard'); // Redirect to dashboard
     } catch (error) {
       console.error('Login failed:', error.response?.data || error.message);
       setError(error.response?.data?.message || 'Invalid credentials');
