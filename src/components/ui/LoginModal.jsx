@@ -31,7 +31,7 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
       setTimeout(() => {
         setShowSuccessPopup(false);
         onClose();
-        navigate('/challenge');
+        navigate('/dashboard');
       }, 3000);
     } catch (error) {
       if (!error.response) {
