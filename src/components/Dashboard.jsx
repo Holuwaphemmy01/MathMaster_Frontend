@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import mathQueen from '../assets/math-queen.png';
 
-// Change from default export to named export
+
 export function Dashboard() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
@@ -27,11 +27,11 @@ export function Dashboard() {
     { name: "Zainab", problemsSolved: 50 }
   ];
 
-  // Refs for dropdown containers
+
   const leaderboardRef = useRef(null);
   const progressRef = useRef(null);
 
-  // Close dropdowns on outside click
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -51,7 +51,7 @@ export function Dashboard() {
     };
   }, []);
 
-  // Toggle logic with mutual exclusivity
+
   const toggleLeaderboard = () => {
     if (showLeaderboard) {
       setShowLeaderboard(false);
@@ -71,12 +71,11 @@ export function Dashboard() {
   };
 
   const handleStartChallenge = () => {
-    navigate('/challenge');
+    navigate('/challenge-mode');
   };
 
   const handleLogout = () => {
-    // Add any logout logic here (e.g., clearing tokens, state, etc.)
-    
+    localStorage.clear(); 
     navigate('/');
   };
 

@@ -25,7 +25,6 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
       });
       
       console.log('User data:', response.data);
-      // Update this line to access the correct path
       localStorage.setItem('username', response.data.data.username);
       onClose();
       navigate('/dashboard');

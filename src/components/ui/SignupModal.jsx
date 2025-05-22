@@ -17,6 +17,7 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
   });
 
   const [errors, setErrors] = useState({});
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false); // Add state for success popup
 
   const validateForm = () => {
     const newErrors = {};
@@ -46,12 +47,19 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
           headers: {
             'Content-Type': 'application/json',
           },
-          withCredentials: false // Changed this to false since we don't need credentials
+          withCredentials: false
         });
         
         console.log('Registration successful:', response.data);
-        onClose();
-        onSwitchToLogin();
+        setShowSuccessPopup(true); // Show success popup
+
+        // Hide popup and switch modals after a delay
+        setTimeout(() => {
+          setShowSuccessPopup(false);
+          onClose();
+          onSwitchToLogin();
+        }, 2000); // Show for 2 seconds
+
       } catch (error) {
         console.error('Registration failed:', error.response?.data || error.message);
         setErrors({ 
@@ -133,6 +141,18 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
               />
               {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
             </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">School *</label>
+              <input
+                type="text"
+                name="school"
+                value={formData.school}
+                onChange={handleChange}
+                className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${errors.email ? 'border-red-500' : ''}`}
+                required
+              />
+              {/* {errors.school && <p className="text-red-500 text-xs mt-1">{errors.school}</p>} */}
+            </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Age *</label>
@@ -147,31 +167,7 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
               />
               {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age}</p>}
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">School</label>
-              <input
-                type="text"
-                name="school"
-                value={formData.school}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                required
-              />
-            </div>
-
+            
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
               <input
@@ -185,17 +181,7 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Age</label>
-                <input
-                  type="number"
-                  name="age"
-                  value={formData.age}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  required
-                />
-              </div>
+              
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Gender</label>
                 <select
@@ -213,7 +199,7 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Language</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Preferred Local Language</label>
               <select
                 name="language"
                 value={formData.language}
@@ -221,7 +207,7 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                 required
               >
-                <option value="English">English</option>
+                <option value="English"></option>
                 <option value="Yoruba">Yoruba</option>
                 <option value="Igbo">Igbo</option>
                 <option value="Hausa">Hausa</option>
