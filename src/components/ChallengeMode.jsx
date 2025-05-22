@@ -70,6 +70,7 @@ export function ChallengeMode() {
     }
   };
 
+  const currentUsername = localStorage.getItem('username');
   const fetchQuestion = async () => {
     setLoading(true);
     setIsTimerRunning(false);
@@ -95,7 +96,7 @@ export function ChallengeMode() {
     fetchQuestion();
   }, []);
 
-  // Add useEffect for timer
+  
   useEffect(() => {
     let interval;
     if (isTimerRunning && timer > 0) {
@@ -164,7 +165,7 @@ export function ChallengeMode() {
                 transition={{ duration: 0.5 }}
               />
               <div>
-                <h2 className="text-2xl font-bold text-purple-700 mb-2">Welcome to the Challenge, {username || 'Student'}!</h2>
+                <h2 className="text-2xl font-bold text-purple-700 mb-2">Welcome to the Challenge, {currentUsername || 'Student'}!</h2>
                 <p className="text-gray-700 min-h-[80px] font-comic-neue text-lg leading-relaxed" style={{ fontFamily: 'Comic Neue, cursive' }}>
                   {welcomeMessage}
                 </p>

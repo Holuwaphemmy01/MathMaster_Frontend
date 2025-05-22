@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/challenge" element={<ChallengeMode />} />
+        <Route path="/challenge-mode" element={<ChallengeMode />} />
       </Routes>
     </Router>
   );

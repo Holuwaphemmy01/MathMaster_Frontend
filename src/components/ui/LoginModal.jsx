@@ -23,8 +23,8 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
     setError('');
     try {
       const response = await axios.post('https://math-master-backend-mb6a.onrender.com/login', formData);
-
-      localStorage.setItem('username', formData.username);
+      localStorage.setItem('username', response.data.data.username);
+      console.log('Login successful:', response.data.data);
 
       setShowSuccessPopup(true);
 

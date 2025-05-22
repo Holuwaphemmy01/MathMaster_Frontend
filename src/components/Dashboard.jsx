@@ -124,7 +124,7 @@ export function Dashboard() {
             className="w-32 h-32 object-cover rounded-full border-8 border-white shadow-xl transform hover:scale-105 transition-transform duration-300"
           />
           <div className="space-y-3">
-            <h2 className="text-2xl font-bold text-purple-900">Welcome {username || 'Student'}!</h2>
+            <h2 className="text-2xl font-bold text-purple-900">Welcome {localStorage.getItem('username') || 'Student'}!</h2>
             <p className="text-base text-purple-800">
               I am <span className="font-bold">Queen Oluwasemilore</span>. Challenge the king to prove your skills!
             </p>
