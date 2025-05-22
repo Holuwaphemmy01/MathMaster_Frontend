@@ -11,7 +11,7 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  if (!isOpen) return null; // Ensure modal only renders when open
+  if (!isOpen) return null; 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -24,8 +24,6 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
     try {
       const response = await axios.post('https://math-master-backend-mb6a.onrender.com/login', formData);
 
-      // Optionally store token if backend returns it
-      // localStorage.setItem('token', response.data.token);
       localStorage.setItem('username', formData.username);
 
       setShowSuccessPopup(true);

@@ -151,7 +151,6 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
                 className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 ${errors.email ? 'border-red-500' : ''}`}
                 required
               />
-              {/* {errors.school && <p className="text-red-500 text-xs mt-1">{errors.school}</p>} */}
             </div>
 
             <div>
@@ -234,7 +233,7 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
       {showSuccessPopup && (
   <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
     <div className="bg-white p-6 rounded-2xl shadow-xl text-center max-w-sm w-full">
-      <h3 className="text-xl font-semibold text-green-600 mb-2">Registration Successful!</h3>
+      <h3 className="text-xl font-semibold text-green-600 mb-2"> Registration Successful! </h3>
       <p className="text-gray-700">Redirecting to login...</p>
     </div>
   </div>
