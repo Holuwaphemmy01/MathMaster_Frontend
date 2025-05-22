@@ -231,6 +231,15 @@ export function SignupModal({ isOpen, onClose, onSwitchToLogin }) {
           </p>
         </div>
       </div>
+      {showSuccessPopup && (
+  <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="bg-white p-6 rounded-2xl shadow-xl text-center max-w-sm w-full">
+      <h3 className="text-xl font-semibold text-green-600 mb-2">Registration Successful!</h3>
+      <p className="text-gray-700">Redirecting to login...</p>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

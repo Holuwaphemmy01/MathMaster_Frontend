@@ -5,45 +5,50 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
-  const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    username: '',
-    password: ''
-  });
-
+  const [formData, setFormData] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
-  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('https://math-master-backend-mb6a.onrender.com/login', formData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: false
-      });
-      
-      console.log('User data:', response.data);
-      localStorage.setItem('username', response.data.data.username);
-      onClose();
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Login failed:', error.response?.data || error.message);
-      setError(error.response?.data?.message || 'Invalid credentials');
-      setShowErrorModal(true);
-    }
-  };
+  if (!isOpen) return null; // Ensure modal only renders when open
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  if (!isOpen) return null;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    try {
+      const response = await axios.post('https://math-master-backend-mb6a.onrender.com/login', formData);
+
+      // Optionally store token if backend returns it
+      // localStorage.setItem('token', response.data.token);
+      localStorage.setItem('username', formData.username);
+
+      setShowSuccessPopup(true);
+
+      setTimeout(() => {
+        setShowSuccessPopup(false);
+        onClose();
+        navigate('/challenge');
+      }, 3000);
+    } catch (error) {
+      if (!error.response) {
+        setError('Network error. Please check your connection.');
+      } else {
+        setError(error.response?.data?.message || 'Login failed. Please try again.');
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-2xl w-full max-w-md relative">
+      <div className="bg-white rounded-2xl w-full max-w-md relative shadow-xl">
         <button
           onClick={onClose}
           className="absolute right-4 top-4 text-gray-500 hover:text-gray-700"
@@ -79,8 +84,12 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
 
             {error && <p className="text-red-500 text-sm">{error}</p>}
 
-            <Button type="submit" className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg">
-              Login
+            <Button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg disabled:opacity-50"
+            >
+              {loading ? 'Logging in...' : 'Login'}
             </Button>
           </form>
 
@@ -93,28 +102,24 @@ export function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
         </div>
       </div>
 
-      {/* Single Error Modal */}
-      {showErrorModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-[60]">
-          <div className="bg-white rounded-lg p-6 w-full max-w-sm relative">
-            <button
-              onClick={() => setShowErrorModal(false)}
-              className="absolute right-4 top-4 text-red-500 hover:text-red-700"
-            >
-              <X size={24} />
-            </button>
-            <div className="flex items-center justify-center mb-4">
-              <X className="text-red-500" size={48} />
-            </div>
-            <h3 className="text-xl font-semibold text-center mb-2">Invalid Credentials</h3>
-            <p className="text-gray-600 text-center">{error}</p>
-            <Button
-              onClick={() => setShowErrorModal(false)}
-              className="w-full mt-4 bg-red-500 hover:bg-red-600 text-white"
-            >
-              Try Again
-            </Button>
-          </div>
+      {showSuccessPopup && (
+        <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 
+          bg-green-500 text-white p-6 rounded-2xl shadow-2xl z-50 flex items-center gap-3"
+        >
+          <svg 
+            className="w-6 h-6" 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              strokeWidth={2} 
+              d="M5 13l4 4L19 7" 
+            />
+          </svg>
+          <p className="text-xl font-bold">Login Successful!</p>
         </div>
       )}
     </div>
